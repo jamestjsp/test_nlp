@@ -228,6 +228,11 @@ check. The analytical certificate above is the proof.
 | 2.975 | 360 | 500 |
 | 3.000 | infeasible | 500 |
 
+Each row is the best profit with the pool sulfur held at one value. It is not
+a local optimum of the full problem. The post's local optima (400, 100, 0) come
+from the zero-or-at-least-1 version, where every row is 500. The 400 at
+$q=1.02$ is unrelated to them.
+
 In mandatory mode the best profit is $494-2|q-2|$ over most of the range, and
 it falls fast near the ends. Every pool inlet is at least 1, and every product
 also receives three direct streams of at least 1. Thus the pool outflow is at
