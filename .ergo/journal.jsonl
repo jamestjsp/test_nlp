@@ -4,3 +4,8 @@
 {"version":1,"task_id":"ONQI7K","kind":"created","at":"2026-10-20T12:19:28.226587Z"}
 {"version":1,"task_id":"ONQI7K","kind":"claim","at":"2026-10-20T12:19:41.6089Z","agent":"coordinator"}
 {"version":1,"task_id":"ONQI7K","kind":"done","at":"2026-10-20T12:20:19.605213Z","agent":"coordinator","text":"Published public repository https://github.com/jamestjsp/test_nlp using active jamestjsp account. Solution commit de6fbde pushed to main and verified via GitHub API; public visibility and default branch main confirmed. Existing solver validation: 11 tests pass."}
+{"version":1,"task_id":"HITNNU","kind":"created","at":"2026-10-20T19:06:58.225172Z"}
+{"version":1,"task_id":"HITNNU","kind":"claim","at":"2026-10-20T19:09:02.231053Z","agent":"coordinator"}
+{"version":1,"task_id":"HITNNU","kind":"done","at":"2026-10-20T19:11:47.059725Z","agent":"coordinator","text":"Verified author correction at minimum 25: mandatory model globally infeasible by exact necessary-and-sufficient threshold 9L \u003c= 200; optional global profit 500. Verified support-local values 400, 300, 100, 0. Parameterized CVXPY and independent SciPy models/checkers/cuts; added Correction.md, corrected results, and persistent regressions. All 43 tests pass; original minimum-1 results preserved. Changes left uncommitted."}
+{"version":1,"task_id":"UDRRAZ","kind":"created","at":"2026-10-20T19:14:49.472148Z"}
+{"version":1,"task_id":"UDRRAZ","kind":"claim","at":"2026-10-20T19:15:09.122041Z","agent":"coordinator"}

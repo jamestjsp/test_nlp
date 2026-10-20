@@ -3,6 +3,11 @@
 **Optional streams: global maximum profit 500. Mandatory streams ≥ 1: global
 maximum profit 494, so the diagram's mandatory-flow problem is feasible.**
 
+**Author's correction:** the intended minimum is 25. At that minimum,
+mandatory streams are infeasible and optional streams still attain 500.
+See [the correction, exact feasibility threshold, and local witnesses](Correction.md).
+This document retains the original minimum-1 study below.
+
 These results use only `Problem.md` and the supplied diagram in
 `1792413976415.pdf`. No feed availability limits, pool capacity, fixed charges,
 or other unshown constraints are assumed. Additional constraints in the post's
@@ -204,7 +209,8 @@ The upper-bound certificate comes from the analytical inequalities, with exact
 integer witnesses. The optional numerical recovery has a gap below $10^{-12}$;
 the exact optional witness has zero gap. No spatial branching is required.
 The supplied local-optimum claims and solver timing comparisons are not used
-as evidence or reproduced.
+as evidence for these global bounds. The local values are verified separately
+in `Correction.md`; the author's solver runs and timings are not reproduced.
 
 ## Independent cross-check at fixed pool sulfur
 
@@ -268,3 +274,5 @@ optional solution attains 500. It checks that the optional relaxation bound is
 
 This resolves the diagram as supplied. A claim that its mandatory-flow model
 is infeasible would require additional constraints or different data.
+The author's subsequent change of the minimum to 25 supplies that different
+data and does make the mandatory model infeasible, as proved in `Correction.md`.

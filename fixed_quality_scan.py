@@ -35,7 +35,9 @@ def arc_upper(arc):
     return sum(CAP.values())
 
 
-def solve_fixed_q(q, optional):
+def solve_fixed_q(q, optional, lower_bound=1.0):
+    if not np.isfinite(lower_bound) or lower_bound <= 0:
+        raise ValueError("Stream lower bound must be finite and positive")
     idx = {arc: k for k, arc in enumerate(ARCS)}
     nvar = 2 * N if optional else N
     c = np.zeros(nvar)
@@ -81,7 +83,7 @@ def solve_fixed_q(q, optional):
     if optional:
         for k, arc in enumerate(ARCS):
             row = np.zeros(nvar)
-            row[k], row[N + k] = 1, -1
+            row[k], row[N + k] = 1, -lower_bound
             add(row, 0, np.inf)
             row = np.zeros(nvar)
             row[k], row[N + k] = 1, -arc_upper(arc)
@@ -90,7 +92,7 @@ def solve_fixed_q(q, optional):
         ub = np.array([arc_upper(a) for a in ARCS] + [1] * N, dtype=float)
         integrality = np.array([0] * N + [1] * N)
     else:
-        lb = np.ones(nvar)
+        lb = np.full(nvar, lower_bound)
         ub = np.array([arc_upper(a) for a in ARCS], dtype=float)
         integrality = np.zeros(nvar)
 
@@ -100,15 +102,17 @@ def solve_fixed_q(q, optional):
         bounds=Bounds(lb, ub),
         integrality=integrality,
     )
-    if res.status != 0:
+    if res.status == 2:
         return None
+    if res.status != 0:
+        raise RuntimeError(f"SciPy/HiGHS failed: {res.message}")
     return -res.fun
 
 
-def exact_profit(flows):
+def exact_profit(flows, lower_bound=1):
     """Validate a witness against the original bilinear model in exact arithmetic."""
     f = {k: Fraction(v) for k, v in flows.items()}
-    assert all(v == 0 or v >= 1 for v in f.values())
+    assert all(v == 0 or v >= Fraction(str(lower_bound)) for v in f.values())
     pool_in = sum(f[("a", i)] for i in FEEDS)
     pool_out = sum(f[("y", j)] for j in PRODUCTS)
     assert pool_in == pool_out
@@ -150,13 +154,14 @@ OPTIONAL_WITNESS = witness(
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--q", type=float, nargs="+", default=PROFILE_Q)
+    parser.add_argument("--lower-bound", type=float, default=1.0)
     args = parser.parse_args()
     print("| Pool sulfur q | Mandatory profit | Optional profit |")
     print("|---:|---:|---:|")
     for q in args.q:
         cells = []
         for optional in (False, True):
-            value = solve_fixed_q(q, optional)
+            value = solve_fixed_q(q, optional, args.lower_bound)
             cells.append("infeasible" if value is None else f"{value:.2f}")
         print(f"| {q:.4f} | {cells[0]} | {cells[1]} |")
 
