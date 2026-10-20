@@ -1,0 +1,287 @@
+{
+  "cvxpy_version": "1.9.2",
+  "highs_version": "1.15.1",
+  "source": "Problem.md and 1792413976415.pdf; no unshown feed or pool capacities assumed",
+  "cases": [
+    {
+      "flow_domain": "mandatory",
+      "original_is_dcp": false,
+      "original_is_mixed_integer": false,
+      "relaxation_is_dcp": true,
+      "fixed_quality_is_dcp": true,
+      "fixed_quality_is_mixed_integer": false,
+      "raw_relaxation_objective_estimate": 496.0,
+      "strengthened_relaxation_objective_estimate": 494.0,
+      "analytic_global_upper_bound": 494.0,
+      "feasible_lower_bound": 494.0,
+      "absolute_gap": 0.0,
+      "certification": "Analytic upper bound matched by exact rational feasible witness",
+      "solver_status": "optimal",
+      "activation_integrality_residual": 0.0,
+      "recovered": {
+        "feasible": true,
+        "profit": 494.0,
+        "direct": [
+          [
+            51.0,
+            1.0
+          ],
+          [
+            1.0,
+            101.0
+          ],
+          [
+            46.0,
+            97.0
+          ]
+        ],
+        "pool_inlet": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "pool_outlet": [
+          2.0,
+          1.0
+        ],
+        "pool_sulfur": 2.0,
+        "production": [
+          100.0,
+          200.0
+        ],
+        "product_sulfur": [
+          2.5,
+          1.5
+        ],
+        "effective_deliveries": [
+          [
+            51.666666666666664,
+            1.3333333333333333
+          ],
+          [
+            1.6666666666666665,
+            101.33333333333333
+          ],
+          [
+            46.666666666666664,
+            97.33333333333333
+          ]
+        ],
+        "loss_from_500": 6.0,
+        "residuals": {
+          "nonnegative": 0.0,
+          "flow_domain": 0.0,
+          "pool_flow_balance": 0.0,
+          "pool_sulfur_balance": 0.0,
+          "product_sulfur": 0.0,
+          "product_capacity": 0.0,
+          "pool_quality_bounds": 0.0,
+          "profit_identity": 0.0
+        },
+        "max_residual": 0.0
+      },
+      "exact_witness": {
+        "feasible": true,
+        "profit": 494.0,
+        "direct": [
+          [
+            51.0,
+            1.0
+          ],
+          [
+            1.0,
+            101.0
+          ],
+          [
+            47.0,
+            96.0
+          ]
+        ],
+        "pool_inlet": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "pool_outlet": [
+          1.0,
+          2.0
+        ],
+        "pool_sulfur": 2.0,
+        "production": [
+          100.0,
+          200.0
+        ],
+        "product_sulfur": [
+          2.5,
+          1.5
+        ],
+        "effective_deliveries": [
+          [
+            51.333333333333336,
+            1.6666666666666665
+          ],
+          [
+            1.3333333333333333,
+            101.66666666666667
+          ],
+          [
+            47.333333333333336,
+            96.66666666666667
+          ]
+        ],
+        "loss_from_500": 6.0,
+        "residuals": {
+          "nonnegative": 0.0,
+          "flow_domain": 0.0,
+          "pool_flow_balance": 0.0,
+          "pool_sulfur_balance": 0.0,
+          "product_sulfur": 0.0,
+          "product_capacity": 0.0,
+          "pool_quality_bounds": 0.0,
+          "profit_identity": 0.0
+        },
+        "max_residual": 0.0
+      }
+    },
+    {
+      "flow_domain": "optional",
+      "original_is_dcp": false,
+      "original_is_mixed_integer": true,
+      "relaxation_is_dcp": true,
+      "fixed_quality_is_dcp": true,
+      "fixed_quality_is_mixed_integer": true,
+      "raw_relaxation_objective_estimate": 500.0,
+      "strengthened_relaxation_objective_estimate": 500.00000000000045,
+      "analytic_global_upper_bound": 500.0,
+      "feasible_lower_bound": 499.99999999999955,
+      "absolute_gap": 4.547473508864641e-13,
+      "certification": "Analytic upper bound matched by exact rational feasible witness",
+      "solver_status": "optimal",
+      "activation_integrality_residual": 0.0,
+      "recovered": {
+        "feasible": true,
+        "profit": 499.99999999999955,
+        "direct": [
+          [
+            50.0,
+            0.0
+          ],
+          [
+            0.0,
+            99.99999999999999
+          ],
+          [
+            50.0,
+            99.99999999999999
+          ]
+        ],
+        "pool_inlet": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pool_outlet": [
+          0.0,
+          0.0
+        ],
+        "pool_sulfur": 2.0,
+        "production": [
+          100.0,
+          199.99999999999997
+        ],
+        "product_sulfur": [
+          2.5,
+          1.5
+        ],
+        "effective_deliveries": [
+          [
+            50.0,
+            0.0
+          ],
+          [
+            0.0,
+            99.99999999999999
+          ],
+          [
+            50.0,
+            99.99999999999999
+          ]
+        ],
+        "loss_from_500": 5.684341886080802e-14,
+        "residuals": {
+          "nonnegative": 0.0,
+          "flow_domain": 0.0,
+          "pool_flow_balance": 0.0,
+          "pool_sulfur_balance": 0.0,
+          "product_sulfur": 0.0,
+          "product_capacity": 0.0,
+          "pool_quality_bounds": 0.0,
+          "profit_identity": 3.979039320256561e-13
+        },
+        "max_residual": 3.979039320256561e-13
+      },
+      "exact_witness": {
+        "feasible": true,
+        "profit": 500.0,
+        "direct": [
+          [
+            50.0,
+            0.0
+          ],
+          [
+            0.0,
+            100.0
+          ],
+          [
+            50.0,
+            100.0
+          ]
+        ],
+        "pool_inlet": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pool_outlet": [
+          0.0,
+          0.0
+        ],
+        "pool_sulfur": 2.0,
+        "production": [
+          100.0,
+          200.0
+        ],
+        "product_sulfur": [
+          2.5,
+          1.5
+        ],
+        "effective_deliveries": [
+          [
+            50.0,
+            0.0
+          ],
+          [
+            0.0,
+            100.0
+          ],
+          [
+            50.0,
+            100.0
+          ]
+        ],
+        "loss_from_500": 0.0,
+        "residuals": {
+          "nonnegative": 0.0,
+          "flow_domain": 0.0,
+          "pool_flow_balance": 0.0,
+          "pool_sulfur_balance": 0.0,
+          "product_sulfur": 0.0,
+          "product_capacity": 0.0,
+          "pool_quality_bounds": 0.0,
+          "profit_identity": 0.0
+        },
+        "max_residual": 0.0
+      }
+    }
+  ]
+}
