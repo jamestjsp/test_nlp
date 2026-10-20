@@ -17,7 +17,7 @@ from solve_pooling import (
 def test_global_bound_meets_original_feasible_point(mode, optimum):
     result = solve_case(mode)
     assert result["feasible_lower_bound"] == pytest.approx(optimum, abs=1e-7)
-    assert result["analytic_global_upper_bound"] == optimum
+    assert result["strengthened_relaxation_objective_estimate"] == pytest.approx(optimum, abs=1e-7)
     assert result["absolute_gap"] <= 1e-7
     assert result["recovered"]["max_residual"] <= 1e-7
     assert not result["original_is_dcp"]
@@ -56,6 +56,23 @@ def test_pool_cut_closes_relaxation_gap():
                                "mandatory")
     assert not candidate["feasible"]
     assert candidate["residuals"]["product_sulfur"] > 1e-7
+
+
+def test_optional_relaxation_bound_matches_certificate():
+    raw = build_relaxation("optional", strengthen=False)
+    strengthened = build_relaxation("optional", strengthen=True)
+    assert solve_checked(raw.problem) == pytest.approx(500)
+    assert solve_checked(strengthened.problem) == pytest.approx(500)
+
+
+def test_pool_contamination_cut_holds_for_well_mixed_pools():
+    rng = np.random.default_rng(0)
+    for _ in range(10_000):
+        inlet = np.array([1, 1, 0]) + rng.exponential(20, size=3)
+        split = rng.uniform(0, 1)
+        outlet = inlet.sum() * np.array([split, 1 - split])
+        routed = np.outer(inlet, outlet) / outlet.sum()
+        assert routed[1, 0] + routed[0, 1] >= 1 - 1e-12
 
 
 def test_original_checker_rejects_broken_pool_sulfur_balance():

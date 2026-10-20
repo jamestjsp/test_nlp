@@ -77,7 +77,11 @@ The script checks this and never sends the non-DCP model to HiGHS.
 
 ## Exact optimal flows
 
-Each entry below is a flow, not a concentration.
+Each entry below is a flow, not a concentration. The optima are not unique.
+The table shows the hand-built exact witnesses (`exact_witness` in
+`solve_pooling.py`). The numerical recovery in `results.json` is a different
+mandatory optimum: C → P1 = 46, C → P2 = 97, Pool → P1 = 2, Pool → P2 = 1,
+with the other flows as below. It also earns 494 with total pool flow 3.
 
 | Stream | Mandatory optimum | Optional optimum |
 |---|---:|---:|
@@ -202,6 +206,36 @@ the exact optional witness has zero gap. No spatial branching is required.
 The supplied local-optimum claims and solver timing comparisons are not used
 as evidence or reproduced.
 
+## Independent cross-check at fixed pool sulfur
+
+`fixed_quality_scan.py` rebuilds the original model with SciPy only, without
+CVXPY. For a fixed pool sulfur $q$ every constraint is linear, so each value of
+$q$ is one LP (mandatory) or MILP (optional) solved by HiGHS through
+`scipy.optimize.milp`. The tests scan 802 values of $q$ in $[1,3]$. No value
+exceeds 494 or 500, and both values are reached at $q=2$. This scan is a bug
+check. The analytical certificate above is the proof.
+
+| Pool sulfur $q$ | Mandatory profit | Optional profit |
+|---:|---:|---:|
+| 1.000 | infeasible | 500 |
+| 1.011 | −639.27 | 500 |
+| 1.020 | 400 | 500 |
+| 1.050 | 492.10 | 500 |
+| 1.500 | 493 | 500 |
+| 2.000 | 494 | 500 |
+| 2.500 | 493 | 500 |
+| 2.950 | 480 | 500 |
+| 2.975 | 360 | 500 |
+| 3.000 | infeasible | 500 |
+
+In mandatory mode the best profit is $494-2|q-2|$ over most of the range, and
+it falls fast near the ends. Every pool inlet is at least 1, and every product
+also receives three direct streams of at least 1. Thus the pool outflow is at
+most $97+197=294$, and the pool sulfur must lie in about
+$[297/294,\;2.9757]$. Outside this interval the mandatory model has no
+solution. The optional model can turn the pool off, so its profit stays 500
+for every $q$.
+
 ## Reproduce
 
 From this folder:
@@ -210,18 +244,22 @@ From this folder:
 uv venv .venv
 uv pip install --python .venv/bin/python -r requirements.txt
 .venv/bin/python solve_pooling.py
+.venv/bin/python fixed_quality_scan.py
 .venv/bin/python -m pytest -q
 ```
 
-`solve_pooling.py` writes `results.json`. Tested with CVXPY 1.9.2 and HiGHS
-1.15.1: **11 tests passed**. Both original models pass feasibility checks with
-tolerance $10^{-7}$; the mandatory numerical witness has zero residual and the
+On Windows, use `.venv\Scripts\python.exe` in place of `.venv/bin/python`.
+
+`solve_pooling.py` writes `results.json`. Tested with CVXPY 1.9.2, HiGHS
+1.15.1 and SciPy 1.18.1: **19 tests passed**. Both original models pass
+feasibility checks with tolerance $10^{-7}$; the mandatory numerical witness has zero residual and the
 optional numerical witness has maximum residual below $10^{-12}$.
 
 The regression suite also checks that a raw relaxation point can violate the
 original product quality, that broken bilinear balances are rejected, that
 optional flows between zero and one are rejected, and that an active-pool
-optional solution attains 500.
+optional solution attains 500. It checks that the optional relaxation bound is
+500, and that the pool contamination cut holds for sampled well-mixed pools.
 
 This resolves the diagram as supplied. A claim that its mandatory-flow model
 is infeasible would require additional constraints or different data.

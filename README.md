@@ -15,6 +15,7 @@ upper bounds match exact feasible witnesses for both domains.
 - [Formulation, optimal flows, and global proofs](Solution.md)
 - [CVXPY implementation](solve_pooling.py)
 - [Numerical results](results.json) and [regression tests](test_pooling.py)
+- [Independent SciPy cross-check at fixed pool sulfur](fixed_quality_scan.py)
 
 ## Run
 
@@ -24,9 +25,12 @@ Requires Python 3.11+ and [uv](https://docs.astral.sh/uv/).
 uv venv .venv
 uv pip install --python .venv/bin/python -r requirements.txt
 .venv/bin/python solve_pooling.py
+.venv/bin/python fixed_quality_scan.py
 .venv/bin/python -m pytest -q
 ```
 
-Validated with CVXPY 1.9.2 and HiGHS 1.15.1; 11 tests pass. The solver writes
-`results.json` and validates the original nonlinear balances. Relaxation
+On Windows, use `.venv\Scripts\python.exe` in place of `.venv/bin/python`.
+
+Validated with CVXPY 1.9.2, HiGHS 1.15.1 and SciPy 1.18.1; 19 tests pass.
+The solver writes `results.json` and validates the original nonlinear balances. Relaxation
 objective estimates are reported separately from analytical certificates.
